@@ -1,3 +1,6 @@
+using System.Reflection;
+using Api.Extensions;
+using AspNetCoreRateLimit;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
 
@@ -6,6 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.ConfigureCRatelimiting();
+
+builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
+builder.Services.ConfigureCors();
+builder.Services.AddAplicationServices(); 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -42,7 +50,9 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
+app.UseIpRateLimiting();
 
 app.UseAuthorization();
 
