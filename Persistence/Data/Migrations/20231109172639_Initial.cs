@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Persistence.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            /* migrationBuilder.AlterDatabase()
+            migrationBuilder.AlterDatabase()
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
@@ -141,13 +141,13 @@ namespace Persistence.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "FK_state_country_IdcountryFk",
                 table: "state",
-                column: "IdcountryFk"); */
+                column: "IdcountryFk");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            /* migrationBuilder.DropTable(
+            migrationBuilder.DropTable(
                 name: "customer");
 
             migrationBuilder.DropTable(
@@ -160,7 +160,7 @@ namespace Persistence.Data.Migrations
                 name: "state");
 
             migrationBuilder.DropTable(
-                name: "country"); */
+                name: "country");
         }
     }
 }
