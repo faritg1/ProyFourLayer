@@ -30,6 +30,15 @@ public class CountryController : BaseController
         return _mapper.Map<List<CountryDto>>(con);
     }
 
+    [HttpGet("getCountriesAndStatesAndCities")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<CountryDto>>> GetCoutriesStateCities()
+    {
+        var countries = await _unitOfWork.Countries.getCountriesAndStatesAndCities();
+        return _mapper.Map<List<CountryDto>>(countries);
+    }
+
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
