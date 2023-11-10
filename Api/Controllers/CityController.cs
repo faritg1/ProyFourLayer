@@ -7,13 +7,13 @@ using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Persistence.Data;
 
 namespace Api.Controllers;
 public class CityController : BaseController
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-
     public CityController(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;

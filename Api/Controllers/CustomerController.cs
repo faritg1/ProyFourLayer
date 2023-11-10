@@ -7,17 +7,20 @@ using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Persistence.Data;
 
 namespace Api.Controllers;
 public class CustomerController : BaseController
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly ProyectoContext _context;
 
-    public CustomerController(IUnitOfWork unitOfWork, IMapper mapper)
+    public CustomerController(IUnitOfWork unitOfWork, IMapper mapper, ProyectoContext context)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _context = context;
     }
 
     [HttpGet]
@@ -28,6 +31,21 @@ public class CustomerController : BaseController
         var con = await _unitOfWork.Customers.GetAllAsync();
 
         return _mapper.Map<List<CustomerDto>>(con);
+    }
+
+    [HttpGet("ClientCity")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public Task<IQueryable<CustomerCityDto>> GetCustomer()
+    {
+        var customer = from c in _context.Customers join ci in _context.Cities on c.IdcityFk equals ci.Id
+        where ci.Name == "Bucaramanga"
+        select new CustomerCityDto{
+            Name = c.Name,
+            Cities = ci.Name
+        };
+
+        return Task.FromResult(customer);
     }
 
     [HttpGet("{id}")]
